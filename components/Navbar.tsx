@@ -13,7 +13,7 @@ export default function Navbar() {
                     height="30" 
                     alt="Pokeball"
                 />
-                <h1>PokeMax</h1>
+                <h1>Pokedex</h1>
             </div>
             <ul className={styles.link_items}>
                 <li>

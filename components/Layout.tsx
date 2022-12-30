@@ -10,7 +10,7 @@ export default function Layout({ children }: any) {
         <>
             <Head>
                 <link rel="icon" sizes="16x16" href="/favicon_io/favicon.ico" />
-                <title>PokeMax</title>
+                <title>Pokedex</title>
             </Head>
             <Navbar />
             <main className="main-container">
