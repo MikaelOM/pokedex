@@ -1,5 +1,11 @@
 import Image from 'next/image'
 
+import { 
+    pokemonProperties, 
+    PropertiesPokemonSpecific,
+    pokemonType,
+    propertiesPokemonPage
+} from '../../utils/types'
 import styles from '../../styles/PokemonPage.module.css'
 
 export const getStaticPaths = async() => {
@@ -10,7 +16,7 @@ export const getStaticPaths = async() => {
     const res = await fetch(`${api}?limit=${maxPokemons}`)
     const data = await res.json()
 
-    const paths = data.results.map(( pokemon: any, index: any) => {
+    const paths = data.results.map(( pokemon: pokemonProperties, index: number) => {
         return {
             params: {pokemonId: (index + 1).toString()},
         }
@@ -22,23 +28,18 @@ export const getStaticPaths = async() => {
     }
 }
 
-export const getStaticProps = async(context: any) => {
-    
+export const getStaticProps = async (context: propertiesPokemonPage) => {    
     const id = context.params.pokemonId
-    console.log(context)
-
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
 
     const data = await res.json()
 
     return {
-        props: {pokemon: data}
+        props: { pokemon: data }
     }
 
 }
-
-export default function Pokemon({ pokemon }: any) {
-    console.log(pokemon.name)
+export default function Pokemon( { pokemon }: PropertiesPokemonSpecific){
     return (
         <div className={styles.pokemon_container}>
             <Image 
@@ -51,7 +52,7 @@ export default function Pokemon({ pokemon }: any) {
             <div className={styles.type_container}>
                     <h4>Type:</h4>
                     <div className={styles.types_items_container}>
-                        {pokemon.types.map((item: any, index: any) => (
+                        {pokemon.types.map((item: pokemonType, index: number) => (
                             <span key={index} className={`${styles.type} ${styles['type_' + item.type.name]}`}>{item.type.name}</span>
                         ))}
                     </div>
