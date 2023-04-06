@@ -1,6 +1,7 @@
 import Card from '../components/Cards'
 import Image from 'next/image'
 
+import { pokemonProperties } from '../utils/types'
 import styles from '../styles/Home.module.css'
 
 export async function getStaticProps() {
@@ -10,7 +11,7 @@ export async function getStaticProps() {
   const res = await fetch(`${api}?limit=${maxPokemons}`)
   const data = await res.json()
 
-  data.results.forEach((item: any, index: any) => {
+  data.results.forEach((item: pokemonProperties, index: number) => {
     item.id = index + 1
   })
 
@@ -21,11 +22,12 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({pokemons}: any) {
+export default function Home({ pokemons = []}) {
+
   return (
     <>
       <div className={styles.title_container}>
-        <h1 className={styles.title}>Poke<span>Next</span></h1>
+        <h1 className={styles.title}>Poke<span>dex</span></h1>
         <Image 
           src="/images/pokeball.png"
           width="50"
@@ -35,8 +37,8 @@ export default function Home({pokemons}: any) {
       </div>
       <div className={styles.pokemon_container}>
         {
-          pokemons.map((pokemon:any) => (
-            <Card key={pokemon.id} name={pokemon.name} id={pokemon.id}/>
+          pokemons.map((pokemon: pokemonProperties) => (
+            <Card key={pokemon.id} name={pokemon.name} id={pokemon.id.toString()}/>
           ))
         }
       </div>
